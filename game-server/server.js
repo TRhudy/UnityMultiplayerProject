@@ -1,40 +1,37 @@
-const WebSocket = require('ws')
-var uuid = require('uuid-random')
+import WebSocket from 'ws';
+import { v4 as uuid } from 'uuid';
 
-const wss = new WebSocket.WebSocketServer({port:8080}, () => {console.log('server started')})
+const wss = new WebSocket.Server({ port: 8080 }, () => {
+  console.log('Server started');
+});
 
-var playersData = {
-	"type": "playerData"
-}
+const playersData = {}; // Initialize an empty object
 
-wss.on('connection', function connection(client){
-	
-	//Create unique ID for user
-	client.id = uuid();
+wss.on('connection', function connection(client) {
+  // Create unique ID for user
+  client.id = uuid();
 
-	console.log('Client ${client.id} Connected!')
+  console.log(`Client ${client.id} Connected!`);
 
-	var currentClient = playersData[""+client.id]
+  // Send default client data for reference
+  client.send(JSON.stringify({ id: client.id }));
 
-	//send default client data for reference
-	client.send('{"id": "${client.id}"}')
-	
-	//Retrieves message from client
-	client.on('message', (data) => {
-		//parse the data into a JSON data set to make it easier to use
-		var dataJSON = JSON.parse(data)
+  // Retrieves message from client
+  client.on('message', (data) => {
+    // Parse the data into a JSON dataset to make it easier to use
+    const dataJSON = JSON.parse(data);
 
-		console.log("Player Message")
-		console.log(dataJSON)
-	})
+    console.log('Player Message');
+    console.log(dataJSON);
+  });
 
-	//Notifies when client disconnects
-	client.on('close',() => {
-		console.log('This Connection Closed!')
-		console.log("Removing Client: "+client.id)
-	})
-})
+  // Notifies when client disconnects
+  client.on('close', () => {
+    console.log('This Connection Closed!');
+    console.log(`Removing Client: ${client.id}`);
+  });
+});
 
-wss.on("listening", () => {
-	console.log('listening on 8080')
-})
+wss.on('listening', () => {
+  console.log('Listening on 8080');
+});
