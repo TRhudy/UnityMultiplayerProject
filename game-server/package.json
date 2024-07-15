@@ -1,6 +1,7 @@
 {
   "name": "game_server",
   "version": "1.0.0",
+  "type": "module",
   "description": "test 1",
   "main": "server.js",
   "scripts": {
