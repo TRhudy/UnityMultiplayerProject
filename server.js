@@ -5,9 +5,9 @@ const wss = new WebSocket.Server({ port: 8080 }, () => {
   console.log('Server started');
 });
 
-const playersData = {}; // Initialize an empty object
+const playerData = {}; // Initialize an empty object
 
-wss.on('connection', function connection(client) {
+wss.on('connection', (client) => {
   // Create unique ID for user
   client.id = uuid();
 
@@ -15,6 +15,9 @@ wss.on('connection', function connection(client) {
 
   // Send default client data for reference
   client.send(JSON.stringify({ id: client.id }));
+
+  // Store Player data
+  playerData[client.id] = { /*initialize player specific data*/ };
 
   // Retrieves message from client
   client.on('message', (data) => {
@@ -27,8 +30,8 @@ wss.on('connection', function connection(client) {
 
   // Notifies when client disconnects
   client.on('close', () => {
-    console.log('This Connection Closed!');
-    console.log(`Removing Client: ${client.id}`);
+    console.log('Connection closing for Client: ${client.id}');
+    delete playerData[client.id];
   });
 });
 

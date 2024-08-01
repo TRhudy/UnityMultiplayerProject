@@ -4,11 +4,13 @@ FROM node:14
 #Identify working directory
 WORKDIR /app
 
-#Copy package
-COPY package*.json /app/
+#Copy Json package to working directory
+COPY package*.json ./
 
-#Install rpm package from package.json
+#Install npm package from package.json
 RUN npm install
+
+#Copy server.js to working directory
 
 #Expose server at port, accessible outside of container
 EXPOSE 8080
