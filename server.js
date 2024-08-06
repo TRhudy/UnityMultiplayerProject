@@ -1,7 +1,7 @@
-import WebSocket from 'ws';
+import { WebSocketServer } from 'ws';
 import { v4 as uuid } from 'uuid';
 
-const wss = new WebSocket.Server({ port: 8080 }, () => {
+const wss = new WebSocketServer({ port: 8080 }, () => {
   console.log('Server started');
 });
 
@@ -30,7 +30,7 @@ wss.on('connection', (client) => {
 
   // Notifies when client disconnects
   client.on('close', () => {
-    console.log('Connection closing for Client: ${client.id}');
+    console.log(`Connection closing for Client: ${client.id}`);
     delete playerData[client.id];
   });
 });
