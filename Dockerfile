@@ -8,9 +8,7 @@ WORKDIR /app
 COPY package*.json /app/
 
 #Install npm package from package.json
-RUN npm config set strict-ssl false \
-  && npm config set registry https://nexus.bcbst.com/repository/npm-public/ \
-  && npm install
+RUN npm install
 
 #Copy server.js to working directory
 COPY server.js /app/
@@ -19,4 +17,4 @@ COPY server.js /app/
 EXPOSE 8080
 
 #Command to start app
-CMD ["npm", "server.js"]
+CMD ["node", "server.js"]
