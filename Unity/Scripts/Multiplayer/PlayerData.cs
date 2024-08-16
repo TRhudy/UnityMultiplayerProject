@@ -1,6 +1,6 @@
 using System;
 
-[Serializable]
+[System.Serializable]
 public struct PlayerData
 {
     //information being passed will tell server the users position

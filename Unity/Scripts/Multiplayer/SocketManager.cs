@@ -12,9 +12,12 @@ public class SocketManager : MonoBehaviour
 
     void Start()
     {
-        socket = new WebSocket("ws://loaclhost:8080");
-
-        socket.Connect();
+        //insert url for OpenShift cluster below, comment out local host line
+        //socket = new WebSocket("ws://your url here");
+        //local host for node testing
+        socket = new WebSocket("ws://localhost:8080");
+    
+            socket.Connect();
 
         socket.OnMessage += (sender, e) =>
         {
